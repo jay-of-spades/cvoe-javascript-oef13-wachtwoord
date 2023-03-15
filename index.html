@@ -6,11 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="author" content="Jay Santarina" />
     <link rel="stylesheet" href="css/styles.css" />
-    <title>Oefining 12: Tegels</title>
+    <title>Oefining 13: Wachtwoord</title>
   </head>
   <body>
     <header>
-      <img src="media/tiles.svg" alt="" class="logo" />
+      <img src="media/plane-ticket.svg" alt="" class="logo" />
     </header>
     <nav>
       <ul>
@@ -20,45 +20,36 @@
       </ul>
     </nav>
     <main>
-      <div id="tegeltjes">
-        <h2>Laten we de oppervlakte van de kamer berekenen</h2>
+      <img
+        src="media/wanderlust.png"
+        alt="man sitting on a couch while smiling"
+        class="front-img"
+      />
+      <div id="log-in">
+        <h2>Welkom bij Tom's Travel</h2>
         <form>
-          <label for="maanden">Kies de maat van uw tegels:</label>
-          <select id="tegels-maat" name="tegels-maat">
-            <option value="1">20x20cm</option>
-            <option value="2">30x30cm</option>
-            <option value="3">30x80cm</option>
-          </select>
-          <div class="input-flex">
-            <label for="lengte">Geef de lengte van uw kamer:</label>
-            <input
-              type="number"
-              placeholder="meter"
-              value="lengte"
-              id="lengte"
-            />
-            <label for="lengte">Geef de breedte van uw kamer:</label>
-            <input
-              type="number"
-              value="breedte"
-              placeholder="meter"
-              id="breedte"
-            />
-          </div>
-
           <input
-            type="button"
-            value="Berekenen"
-            onclick="aantalTegelsBerekenen()"
-            class="btn"
+            type="text"
+            placeholder="Typ email"
+            id="email"
+            class="input-align"
           />
+          <input
+            type="text"
+            placeholder="Typ wachtwoord"
+            id="password"
+            onfocus="handleFocus()"
+            onblur="handleBlur()"
+            class="input-align"
+          />
+          <input type="button" value="Log in" onclick="checkWW()" class="btn" />
         </form>
 
-        <div id="hoeveelheid-tegels" class="hidden"></div>
+        <div id="meldingen" class="hidden"></div>
       </div>
     </main>
     <footer>
-      <p class="copyright">&copy; Copyright 2023-present: Tolken Gone Retro</p>
+      <p class="copyright">&copy; Copyright 2023-present: Tom's Travel</p>
       <p>All rights reserved</p>
     </footer>
     <script src="js/script.js"></script>

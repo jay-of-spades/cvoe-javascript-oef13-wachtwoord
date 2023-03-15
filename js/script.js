@@ -1,67 +1,73 @@
-const tegelsMaat = document.getElementById('tegels-maat');
+'use strict';
+const input = document.getElementById('password');
+let inputWW = 'zegikniet',
+  melding = document.getElementById('meldingen'),
+  emailInput = document.getElementById('email');
 
-function aantalTegelsBerekenen() {
-  let gekozenTegelMaat = tegelsMaat.value;
-  let oppervlakte = oppervlakteBerekenen();
-  let aantalTegels;
-
-  if (isNaN(oppervlakte)) {
-    showError();
-    document.getElementById('hoeveelheid-tegels').innerHTML =
-      'Vul alstublieft de lengte en breedte van uw kamer in.';
-    document.getElementById('hoeveelheid-tegels').classList.remove('hidden');
-    return;
+function checkWW() {
+  let errorMessage = '';
+  if (input.value === inputWW && emailInput.value !== '') {
+    melding.classList.remove('hidden');
+    melding.innerHTML = 'Juist wachtwoord. Welkom';
+  }
+  if (input.value === '' || input.value !== inputWW) {
+    input.classList.add('input-error');
+    errorMessage = 'Er is iets mis met het wachtwoord.';
+  }
+  if (emailInput.value === '') {
+    emailInput.classList.add('input-error');
+    errorMessage +=
+      (errorMessage ? ' ' : '') + 'Die e-mail staat niet in onze lijst.';
   }
 
-  switch (gekozenTegelMaat) {
-    case '1':
-      aantalTegels = ((oppervlakte * 10000) / (20 * 20)) * 1.15;
-      break;
-    case '2':
-      aantalTegels = ((oppervlakte * 10000) / (30 * 30)) * 1.15;
-      break;
-    case '3':
-      aantalTegels = ((oppervlakte * 10000) / (30 * 80)) * 1.15;
-      break;
-  }
-
-  aantalTegels = Math.ceil(aantalTegels);
-  console.log(aantalTegels);
-  document.getElementById(
-    'hoeveelheid-tegels'
-  ).innerHTML = `Aantal tegels nodig: ${aantalTegels}`;
-  document.getElementById('hoeveelheid-tegels').classList.remove('hidden');
-}
-
-function oppervlakteBerekenen() {
-  let lengte = document.getElementById('lengte');
-  let breedte = document.getElementById('breedte');
-  let l = parseFloat(lengte.value);
-  let b = parseFloat(breedte.value);
-
-  return l * b;
-}
-
-function showError() {
-  let lengte = document.getElementById('lengte');
-  let breedte = document.getElementById('breedte');
-
-  if (!lengte.value || isNaN(lengte.value)) {
-    lengte.classList.add('input-error');
-  } else {
-    lengte.classList.remove('input-error');
-  }
-
-  if (!breedte.value || isNaN(breedte.value)) {
-    breedte.classList.add('input-error');
-  } else {
-    breedte.classList.remove('input-error');
+  if (errorMessage) {
+    melding.classList.remove('hidden');
+    melding.innerHTML = errorMessage;
   }
 }
 
-document.getElementById('lengte').addEventListener('focus', removeErrorBorder);
-document.getElementById('breedte').addEventListener('focus', removeErrorBorder);
-
-function removeErrorBorder(event) {
-  event.target.classList.remove('input-error');
+function clearErrorMessage() {
+  if (input.classList.contains('input-error')) {
+    melding.innerHTML = '';
+    melding.classList.add('hidden');
+    input.classList.remove('input-error');
+    ('input-error');
+    input.value = '';
+  }
+  if (emailInput.classList.contains('input-error')) {
+    melding.innerHTML = '';
+    melding.classList.add('hidden');
+    emailInput.classList.remove('input-error');
+    emailInput.value = '';
+  }
 }
+
+function handleFocus() {
+  clearErrorMessage();
+  if (input.type === 'text' && input.value === '') {
+    input.type = 'password';
+  }
+}
+
+function handleEmailFocus() {
+  clearErrorMessage();
+}
+
+function handleBlur() {
+  if (input.value === '') {
+    input.type = 'text';
+  }
+}
+
+function handleInput() {
+  if (input.value !== '' && input.type === 'text') {
+    input.type = 'password';
+  }
+}
+
+function init() {
+  input.addEventListener('input', handleInput);
+  input.addEventListener('focus', handleFocus);
+  emailInput.addEventListener('focus', handleEmailFocus);
+}
+window.onload = init;
